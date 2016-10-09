@@ -1,0 +1,10 @@
+
+#a_step2, #a_step3{
+	//visibility: hidden;
+	display: none;
+	
+}
+
+#firstName, #middleName, #lastName, #information, #agree {
+	disabled:true;
+}

@@ -1,0 +1,10 @@
+
+#n_step2, #n_step3, #n_step4, #n_step5, #n_step6, #n_step7, #n_step8, #n_step9, #n_step10, #n_step11{
+	//visibility: hidden;
+	display: none;
+	
+}
+
+#firstName, #middleName, #lastName, #information, #agree {
+	disabled:true;
+}

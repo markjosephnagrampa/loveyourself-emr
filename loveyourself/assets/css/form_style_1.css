@@ -1,0 +1,7 @@
+html{
+	font-family: Helvetica Neue;
+	background-color: white;
+}
+#step2, #step3, #step4 {
+	visibility: hidden;
+}
