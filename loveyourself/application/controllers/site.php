@@ -418,7 +418,23 @@ class Site extends CI_Controller {
        // PDF Code
     public function pdf(){
 
-    	// Only load the pdf if the Patient Session ID is set.
+    	// A counselor can only view patient's assigned to him/her
+    	
+    		// TEMPORARY CODE - username convention may still change
+    		/*
+		    	if($this->session->userdata('usrname') && 
+		    		$this->session->userdata('staff_profession')== 'CNS' &&
+		    		($this->session->userdata('patient_ref_code') || $this->input->post('ref_code'))){
+
+		    		// 1. Query the counselor which filled the patient's record
+
+
+		    		$staff_id = ltrim($this->session->userdata('staff_id'),'0');
+
+
+		    	}
+		    */
+    	// Only load the pdf if a staff is logged in.
 
     	if($this->session->userdata('usrname')){
 

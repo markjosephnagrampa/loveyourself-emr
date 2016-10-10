@@ -98,13 +98,7 @@
 
 							// SOLUTION B: Use PHPMailer Library
 
-								ob_start();
-								// Temporary Code
-									// for localhost
-									require_once(dirname(__FILE__).'\PHPMailer-master\PHPMailerAutoload.php');
-									// for agila
-									//require_once(dirname(__FILE__).'/PHPMailer-master/PHPMailerAutoload.php');
-									
+							require_once(dirname(__FILE__).'\PHPMailer-master\PHPMailerAutoload.php');
 							//include("class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
 
 							$mail             = new PHPMailer();
@@ -159,7 +153,6 @@
 							  //$email_message = "Message sent!";
 							}
 							    
-							ob_end_clean();
 
 						redirect(base_url());
 					}
@@ -176,7 +169,6 @@
 		function _rand_string( $length ) {
 			$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";	
 			$size = strlen( $chars );
-			$str = '';
 			for( $i = 0; $i < $length; $i++ ) {
 				$str .= $chars[ rand( 0, $size - 1 ) ];
 			}
@@ -197,7 +189,7 @@
 			if ($this->form_validation->run() != true) {
 				$this->session->set_flashdata('wrong_usrname', $this->input->post('usrname'));
 				$this->session->set_flashdata('login_error', 'Invalid username or password!');
-				redirect(base_url());
+				//redirect(base_url());
 			} else {
 				$username = $this->session->flashdata('tempo_login');
 				$password = $this->input->post('psw');

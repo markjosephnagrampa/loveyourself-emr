@@ -73,7 +73,7 @@
 			<table cellspacing="5">
 
 			<tr>
-				<td><img src="images/uchk.jpg" style="width:10px; height:10px;"></td>
+				<td><img src="images/chk.jpg" style="width:10px; height:10px;"></td>
 				<td> I was given information about HIV and HIV testing, <br>
 											 and was given the opportunity to ask questions <br>
 											during pretest counseling or group test information <br>
@@ -86,7 +86,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><img src="images/uchk.jpg" style="width:10px; height:10px;"></td>
+				<td><img src="images/chk.jpg" style="width:10px; height:10px;"></td>
 				<td> I agree to be tested for HIV.
 				</td>
 				<td>
@@ -1371,7 +1371,13 @@
 <?php
 
     $content = ob_get_clean();
-    require_once(dirname(__FILE__).'\html2pdfv4\html2pdf.class.php');
+    //TEMPORARY CODE
+    
+    	// For localhost
+    	require_once(dirname(__FILE__).'\html2pdfv4\html2pdf.class.php');
+
+    	// For agila
+    	//require_once(dirname(__FILE__).'/html2pdfv4/html2pdf.class.php');
     try
     {
 		$html2pdf = new HTML2PDF('P','A4','en', false, 'ISO-8859-15', array('80mm', '100mm', '100mm', '100mm')); 

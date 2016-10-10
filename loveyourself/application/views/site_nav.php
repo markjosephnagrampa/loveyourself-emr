@@ -1,5 +1,8 @@
 <!--Changelog
 	Oct 8, 2016 - Added JQuery scripts for forgot password modals
+	Oct 10, 2016 - Forgot password feature
+				 	- works perfectly in pc
+				 	- has modal errors in mobile (probably because of ob_end_clean()) 
 -->
 
 <!--JQuery Scripts for Forgot Password Modals -->
@@ -34,6 +37,9 @@
 		$(document).ready(function(){
 			$("#forgot_password_link").click(function(){
 	    		$("#myModal_LogIn").modal('hide');
+			});
+			$("#forgot_password_submit_button").click(function(){
+	    		$("#myModal_ForgotPassword").modal('hide');
 			});
 
 		});
@@ -212,7 +218,7 @@
 										  
 										</div>
 										<div id="capsWarning" class="alert alert-DANGER" style="display:none;"><strong>Caps Lock is on.</strong></div>
-										  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Submit</button>
+										  <button type="submit" class="btn btn-success btn-block" id = "forgot_password_submit_button"><span class="glyphicon glyphicon-off"></span> Submit</button>
 									  </form>
 									</div>
 									<div class="modal-footer">
@@ -230,9 +236,19 @@
 								  <div class="modal-content">
 									<div class="modal-header" style="padding:35px 50px;">
 									  <button type="button" class="close" data-dismiss="modal">&times;</button>
-									  <h4><span class="glyphicon glyphicon-info-sign"></span> Email Sent!</h4>
-									  <?php  //if($this->session->flashdata('query_email_success')) echo $this->session->flashdata('query_email_success');
-											 //else if($this->session->flashdata('query_email_failure')) echo $this->session->flashdata('query_email_failure'); ?>
+									  <h4><span class="glyphicon glyphicon-info-sign"></span> 
+
+									  <?php 
+										  if($this->session->flashdata('send_email_failure')){
+										  	echo 'Email error!';
+										  }
+										  else{
+										  	echo 'Email Sent!';
+										  }
+
+									  ?>
+
+									   </h4>
 									  
 									</div>
 									<div class="modal-body" style="padding:40px 50px;">
@@ -241,7 +257,7 @@
 												echo $this->session->flashdata('send_email_failure');
 											}
 											else{
-												echo "Password reset link has been sent to <?php echo '<i>'".$this->session->flashdata('email_address')."</i>." ;
+												echo "A new password has been sent to <i>".$this->session->flashdata('email_address')."</i>." ;
 											}
 										?>
 									  
