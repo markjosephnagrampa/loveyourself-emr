@@ -131,12 +131,12 @@
 							$mail->SMTPSecure = "tls";                 // sets the prefix to the servier
 							$mail->Host       = "smtp.mail.yahoo.com";      // sets GMAIL as the SMTP server
 							$mail->Port       = 587;                   // set the SMTP port for the GMAIL server
-							$mail->Username   = "marknagrampa_489@yahoo.com";  // GMAIL username
-							$mail->Password   = "discvor489";            // GMAIL password
+							$mail->Username   = "noreply_loveyourself@yahoo.com";  // GMAIL username
+							$mail->Password   = "loveyourself";            // GMAIL password
 
-							$mail->SetFrom('marknagrampa_489@yahoo.com', 'LoveYourself');
+							$mail->SetFrom('noreply_loveyourself@yahoo.com', 'LoveYourself');
 
-							$mail->AddReplyTo("marknagrampa_489@yahoo.com","First Last");
+							$mail->AddReplyTo("noreply_loveyourself@yahoo.com","LoveYourself");
 
 							$mail->Subject    = "New Loveyourself Account Password";
 
@@ -144,7 +144,7 @@
 
 							$mail->MsgHTML($body);
 
-							$address = "marknagrampa489@gmail.com";
+							$address = $email;
 							$mail->AddAddress($address, "John Doe");
 
 							// $mail->AddAttachment("images/phpmailer.gif");      // attachment
