@@ -32,9 +32,25 @@
             <p> Here is your reference code: <?php echo $reference_code; ?></p>
         </div>
         <div>
-            <a href="#">
+            <!--Edited Oct 11, 2016-->
+               <?php 
+                    echo form_open();
+                    $data = array(
+                        'name' => 'refcode_PDF',
+                        'id'   => 'refcode_PDF',
+                        'value' => 'Save as PDF',
+                        'type' => 'submit',
+                        'content' => 'Save as PDF',
+                        'formtarget' => '_blank',
+                        'formaction' => 'view_refcode_pdf', // Edited Oct 11, 2016 (Temporary)
+                        'class' => 'btn btn-primary btn-block'
+                     );
+                     echo form_submit($data);
+                     echo form_close();
+                 ?>
+            <!--<a href="#">
                 <button type="button" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-file"></span> Save as PDF</button>
-            </a>
+            </a>-->
         </div>
     </div>
 </div>

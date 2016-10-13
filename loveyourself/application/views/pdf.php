@@ -183,7 +183,7 @@
 						</span>
 					</td>
 					<td style="border: 1px solid black; width: 31%; border-left: 0px;">
-						<span style="margin-top: 5px;"><img src="images/uchk.jpg" style="width:10px; height:10px;"> Not enrolled in philhealth</span>
+						<span style="margin-top: 5px;"><img src="images/<?php if(!$philhealth_number_check)echo 'u'; ?>chk.jpg" style="width:10px; height:10px;"> Not enrolled in PhilHealth</span>
 					</td>
 					
 				</tr>

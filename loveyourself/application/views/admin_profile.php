@@ -7,6 +7,12 @@
                      <h1 style = "font-size: 50px;">A D M I N I S T R A T O R</h1>
                     <h2>      </h2>
                      
+                     <?php 
+                      if($this->session->flashdata('refcode_error')){
+                        echo $this->session->flashdata('refcode_error');
+                      }
+                     ?>
+                     
                      <?php echo form_open('site/form_profile');?>
                      <div class="form-group">
                         <?php 

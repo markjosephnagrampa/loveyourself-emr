@@ -1,8 +1,10 @@
-<!--Changelog
+<!-- Edit Log
 	Oct 8, 2016 - Added JQuery scripts for forgot password modals
 	Oct 10, 2016 - Forgot password feature
 				 	- works perfectly in pc
 				 	- has modal errors in mobile (probably because of ob_end_clean()) 
+	Oct 11, 2016 - Currently working on:
+					- view only assigned
 -->
 
 <!--JQuery Scripts for Forgot Password Modals -->
@@ -256,8 +258,11 @@
 											if($this->session->flashdata('send_email_failure')){
 												echo $this->session->flashdata('send_email_failure');
 											}
-											else{
+											else if($this->session->flashdata('query_email_success') !== null){
 												echo "A new password has been sent to <i>".$this->session->flashdata('email_address')."</i>." ;
+											}
+											else{
+												echo "Please retry this action.";
 											}
 										?>
 									  

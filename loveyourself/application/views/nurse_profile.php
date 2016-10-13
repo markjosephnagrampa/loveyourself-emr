@@ -6,6 +6,11 @@
                 <div class="jumbotron">
                      <h1>N U R S E</h1>
                     <h2>      </h2>
+                     <?php 
+                      if($this->session->flashdata('refcode_error')){
+                        echo $this->session->flashdata('refcode_error');
+                      }
+                     ?>
                      
                      <?php echo form_open('site/form_profile');?>
                      <div class="form-group">
