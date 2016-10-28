@@ -5,5 +5,10 @@
 			$this->session->sess_destroy();
 			redirect(base_url());
 		}
+		
+		public function patient_logout(){
+			$this->session->unset_userdata('visitor');
+			redirect(base_url().'site');
+		}
 	}
 ?>

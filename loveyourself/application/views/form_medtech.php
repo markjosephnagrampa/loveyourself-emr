@@ -81,12 +81,11 @@
 			$pcr_for_infants = TRUE;
 		}
 	}
-
-echo form_open('site/submit_form');?>
+?>
 <div class="m_step" id="m_step1">
 	<?php
 	$attributes = array('id' => 'formMedTechView');
-	echo form_open('', $attributes);
+	echo form_open('site/medtech_insert', $attributes);
 	echo form_fieldset('<strong>INFORMED CONSENT FOR HIV TESTING</strong>');
 	echo "<p>The Department of Health (DOH) has an existing program for the prevention and control of the Human Immunodeficiency Virus (HIV) in the Philippines.  The National Epidemiology Center (NEC) of DOH is mandated by the Republic Act 8504 to collect information which can help in planning activities which will help halt the spread of HIV and be beneficial to the people.  Your full cooperation is very important to undertake this activity.  We encourage you to answer all questions as honestly as possible. </p>";
 	echo form_fieldset();

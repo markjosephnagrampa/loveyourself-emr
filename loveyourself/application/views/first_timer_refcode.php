@@ -24,12 +24,15 @@
                <!-- Modal -->
         
         <div class="jumbotron">
-            <h1>HELLO USER</h1>
+            <h1>HELLO <?php $arr = $this->session->userdata('visitor'); echo $arr['firstName']?></h1>
             <p> Your form was successfully submitted!</p>
+			<?php print_r($this->session->userdata('visitor'));?></p>
         </div>
        <div class="jumbotron">
             <h1>REFERENCE CODE</h1>
             <p> Here is your reference code: <?php echo $reference_code; ?></p>
+			<?php echo "<script>alert('The page will redirect in 10 seconds');</script>";
+			header('Refresh: 20; URL=http://localhost/loveyourself/logout/patient_logout');?>?>
         </div>
         <div>
             <!--Edited Oct 11, 2016-->
