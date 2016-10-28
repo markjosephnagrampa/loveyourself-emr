@@ -1307,9 +1307,10 @@
 		'value' => 'Submit Form',
 		'type' => 'submit',
 		'content' => 'Submit Form',
+		'formaction' => 'refcode_firsttimer', // Edited Oct 11, 2016 (Temporary)
 		'class' => 'btn btn-default'
 	);
-	echo form_button($data);
+	echo form_submit($data);
 	echo form_close();
 	 ?>
 </div> <!-- end of step 4-->

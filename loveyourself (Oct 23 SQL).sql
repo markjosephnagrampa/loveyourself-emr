@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 09, 2016 at 10:42 AM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- Host: localhost
+-- Generation Time: Oct 23, 2016 at 09:40 PM
+-- Server version: 5.5.52-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `loveyourself`
+-- Database: `CS128.1-16171-1`
 --
 
 -- --------------------------------------------------------
@@ -26,11 +26,12 @@ SET time_zone = "+00:00";
 -- Table structure for table `ci_sessions`
 --
 
-CREATE TABLE `ci_sessions` (
+CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `id` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `data` blob NOT NULL
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
+  KEY `ci_sessions_timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -91,7 +92,7 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 -- Table structure for table `non_first_timer`
 --
 
-CREATE TABLE `non_first_timer` (
+CREATE TABLE IF NOT EXISTS `non_first_timer` (
   `first_name` varchar(20) NOT NULL,
   `middle_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
@@ -113,12 +114,15 @@ INSERT INTO `non_first_timer` (`first_name`, `middle_name`, `last_name`, `month_
 -- Table structure for table `patient_counselor_record`
 --
 
-CREATE TABLE `patient_counselor_record` (
+CREATE TABLE IF NOT EXISTS `patient_counselor_record` (
   `patient_id` int(8) NOT NULL,
   `staff_id` int(5) NOT NULL,
   `clinical_picture` tinyint(1) NOT NULL COMMENT '0-Asymptomatic 1-Symptomatic',
   `clinical_picture_ssx` varchar(50) NOT NULL,
-  `clinical_picture_who_staging` varchar(50) NOT NULL
+  `clinical_picture_who_staging` varchar(50) NOT NULL,
+  PRIMARY KEY (`patient_id`,`staff_id`),
+  KEY `patient_id` (`patient_id`,`staff_id`),
+  KEY `staff_id` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -136,7 +140,7 @@ INSERT INTO `patient_counselor_record` (`patient_id`, `staff_id`, `clinical_pict
 -- Table structure for table `patient_history_record`
 --
 
-CREATE TABLE `patient_history_record` (
+CREATE TABLE IF NOT EXISTS `patient_history_record` (
   `patient_id` int(8) NOT NULL,
   `had_blood_transfusion` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
   `had_blood_transfusion_year` int(4) NOT NULL,
@@ -153,7 +157,9 @@ CREATE TABLE `patient_history_record` (
   `sex_with_prostitute` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
   `sex_with_prostitute_year` int(4) NOT NULL,
   `sex_for_payment` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
-  `sex_for_payment_year` int(4) NOT NULL
+  `sex_for_payment_year` int(4) NOT NULL,
+  PRIMARY KEY (`patient_id`),
+  KEY `patient_id` (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -171,7 +177,7 @@ INSERT INTO `patient_history_record` (`patient_id`, `had_blood_transfusion`, `ha
 -- Table structure for table `patient_medtech_record`
 --
 
-CREATE TABLE `patient_medtech_record` (
+CREATE TABLE IF NOT EXISTS `patient_medtech_record` (
   `patient_id` int(8) NOT NULL,
   `staff_id` int(5) NOT NULL,
   `hiv_proficiency_number` varchar(20) NOT NULL,
@@ -180,7 +186,10 @@ CREATE TABLE `patient_medtech_record` (
   `year_issued` int(4) NOT NULL,
   `month_expired` int(2) NOT NULL,
   `day_expired` int(2) NOT NULL,
-  `year_expired` int(4) NOT NULL
+  `year_expired` int(4) NOT NULL,
+  PRIMARY KEY (`patient_id`,`staff_id`),
+  KEY `patient_id` (`patient_id`,`staff_id`),
+  KEY `staff_id` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -197,12 +206,14 @@ INSERT INTO `patient_medtech_record` (`patient_id`, `staff_id`, `hiv_proficiency
 -- Table structure for table `patient_mother_record`
 --
 
-CREATE TABLE `patient_mother_record` (
+CREATE TABLE IF NOT EXISTS `patient_mother_record` (
   `patient_id` int(8) NOT NULL,
   `mother_first_name` varchar(20) NOT NULL,
   `mother_middle_name` varchar(20) NOT NULL,
   `mother_last_name` varchar(20) NOT NULL,
-  `mother_hiv_infected` tinyint(1) NOT NULL
+  `mother_hiv_infected` tinyint(1) NOT NULL,
+  PRIMARY KEY (`patient_id`),
+  KEY `patient_id` (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -220,7 +231,7 @@ INSERT INTO `patient_mother_record` (`patient_id`, `mother_first_name`, `mother_
 -- Table structure for table `patient_reason_record`
 --
 
-CREATE TABLE `patient_reason_record` (
+CREATE TABLE IF NOT EXISTS `patient_reason_record` (
   `patient_id` int(8) NOT NULL,
   `mother_infected_hiv` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
   `partner_infected_hiv` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
@@ -237,7 +248,9 @@ CREATE TABLE `patient_reason_record` (
   `tb_patient` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
   `active_hepatitis` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
   `no_particular_reason` tinyint(1) NOT NULL COMMENT '0-No 1-Yes',
-  `specify_other` varchar(50) NOT NULL
+  `specify_other` varchar(50) NOT NULL,
+  PRIMARY KEY (`patient_id`),
+  UNIQUE KEY `patient_id` (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -255,7 +268,7 @@ INSERT INTO `patient_reason_record` (`patient_id`, `mother_infected_hiv`, `partn
 -- Table structure for table `patient_record`
 --
 
-CREATE TABLE `patient_record` (
+CREATE TABLE IF NOT EXISTS `patient_record` (
   `patient_id` int(8) NOT NULL,
   `patient_reference_code` varchar(8) NOT NULL,
   `philhealth_number` varchar(12) NOT NULL,
@@ -300,7 +313,8 @@ CREATE TABLE `patient_record` (
   `hiv_test_before_year` int(4) NOT NULL,
   `hiv_test_before_facility` varchar(50) NOT NULL,
   `hiv_test_before_municipality_city` varchar(30) NOT NULL,
-  `hiv_test_before_result` tinyint(1) NOT NULL COMMENT '0-Negative 1-Positive'
+  `hiv_test_before_result` tinyint(1) NOT NULL COMMENT '0-Negative 1-Positive',
+  PRIMARY KEY (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -318,14 +332,17 @@ INSERT INTO `patient_record` (`patient_id`, `patient_reference_code`, `philhealt
 -- Table structure for table `patient_saccl_record`
 --
 
-CREATE TABLE `patient_saccl_record` (
+CREATE TABLE IF NOT EXISTS `patient_saccl_record` (
   `patient_id` int(8) NOT NULL,
   `staff_id` int(5) NOT NULL,
   `saccl_lab_code` varchar(10) NOT NULL,
   `month_hiv_confirmed` int(2) NOT NULL,
   `day_hiv_confirmed` int(2) NOT NULL,
   `year_hiv_confirmed` int(4) NOT NULL,
-  `saccl_test` tinyint(1) NOT NULL
+  `saccl_test` tinyint(1) NOT NULL,
+  PRIMARY KEY (`patient_id`,`staff_id`),
+  KEY `patient_id` (`patient_id`,`staff_id`),
+  KEY `staff_id` (`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -342,7 +359,7 @@ INSERT INTO `patient_saccl_record` (`patient_id`, `staff_id`, `saccl_lab_code`, 
 -- Table structure for table `staff_record`
 --
 
-CREATE TABLE `staff_record` (
+CREATE TABLE IF NOT EXISTS `staff_record` (
   `staff_id` int(5) NOT NULL,
   `testing_facility_id` int(2) NOT NULL,
   `first_name` varchar(20) NOT NULL,
@@ -355,7 +372,9 @@ CREATE TABLE `staff_record` (
   `day_of_birth` int(2) NOT NULL,
   `year_of_birth` int(4) NOT NULL,
   `email_address` varchar(50) NOT NULL,
-  `contact_number` varchar(11) NOT NULL
+  `contact_number` varchar(11) NOT NULL,
+  PRIMARY KEY (`staff_id`,`testing_facility_id`),
+  KEY `testing_facility_id` (`testing_facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -363,10 +382,10 @@ CREATE TABLE `staff_record` (
 --
 
 INSERT INTO `staff_record` (`staff_id`, `testing_facility_id`, `first_name`, `middle_name`, `last_name`, `staff_profession`, `staff_password`, `sex`, `month_of_birth`, `day_of_birth`, `year_of_birth`, `email_address`, `contact_number`) VALUES
-(1, 1, 'Mark', 'Lavena', 'Devin', 1, 'admin', 'M', 1, 2, 1990, 'markdevin@yahoo.com', '09241219987'),
-(2, 1, 'Divya', 'Putra', 'Dunst', 2, 'counselor', 'F', 2, 3, 1991, 'divyadunst03@yahoo.com', '09444540876'),
-(3, 1, 'Jyrgal', 'Halcyon', 'Westenberg', 3, 'nurse', 'F', 3, 4, 1992, 'westernberg_jyrgal@gmail.com', '09341219978'),
-(4, 1, 'Arachne', 'Alysia', 'Courtemanche', 4, 'physician', 'M', 4, 5, 1993, 'aacourtemanche@up.edu.ph', '09684541133'),
+(1, 1, 'Mark', 'Lavena', 'Devin', 1, 'admin', 'M', 1, 2, 1990, 'iamfayealano@gmail.com', '09241219987'),
+(2, 1, 'Divya', 'Putra', 'Dunst', 2, 'counselor', 'F', 2, 3, 1991, 'lopezabegaillyn@gmail.com', '09444540876'),
+(3, 1, 'Jyrgal', 'Halcyon', 'Westenberg', 3, 'nurse', 'F', 3, 4, 1992, 'rvaldez0317@gmail.com', '09341219978'),
+(4, 1, 'Arachne', 'Alysia', 'Courtemanche', 4, 'physician', 'M', 4, 5, 1993, 'marknagrampa489@gmail.com', '09684541133'),
 (5, 1, 'Hildur', 'Katlego', 'Quinlan', 5, 'medtech', 'M', 5, 6, 1994, 'hkq44@outlook.com', '09138878877'),
 (6, 2, 'Aemiliana', 'Marijke', 'Ryer', 2, 'counselor', 'F', 6, 7, 1995, 'aemilianaMarijkeRyer@mail.com', '09149969696');
 
@@ -376,14 +395,15 @@ INSERT INTO `staff_record` (`staff_id`, `testing_facility_id`, `first_name`, `mi
 -- Table structure for table `testing_facility_record`
 --
 
-CREATE TABLE `testing_facility_record` (
+CREATE TABLE IF NOT EXISTS `testing_facility_record` (
   `testing_facility_id` int(2) NOT NULL,
   `facility_name` varchar(50) NOT NULL,
   `hiv_eqas_lab_code` varchar(20) NOT NULL,
   `hiv_eqas_last_year` int(4) NOT NULL,
   `mailing_address` varchar(75) NOT NULL,
   `contact_numbers` int(11) NOT NULL,
-  `email_address` varchar(50) NOT NULL
+  `email_address` varchar(50) NOT NULL,
+  PRIMARY KEY (`testing_facility_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -400,7 +420,7 @@ INSERT INTO `testing_facility_record` (`testing_facility_id`, `facility_name`, `
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `staff_id` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -424,7 +444,7 @@ INSERT INTO `users` (`staff_id`, `password`) VALUES
 -- Table structure for table `visitor_record`
 --
 
-CREATE TABLE `visitor_record` (
+CREATE TABLE IF NOT EXISTS `visitor_record` (
   `patient_id` int(8) NOT NULL,
   `patient_reference_code` varchar(8) NOT NULL,
   `philhealth_number` varchar(12) NOT NULL,
@@ -462,7 +482,8 @@ CREATE TABLE `visitor_record` (
   `work_abroad_month` int(2) NOT NULL,
   `work_abroad_year` int(4) NOT NULL,
   `work_abroad_based` tinyint(1) NOT NULL,
-  `work_abroad_country` varchar(50) NOT NULL
+  `work_abroad_country` varchar(50) NOT NULL,
+  PRIMARY KEY (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -472,86 +493,6 @@ CREATE TABLE `visitor_record` (
 INSERT INTO `visitor_record` (`patient_id`, `patient_reference_code`, `philhealth_number`, `first_name`, `middle_name`, `last_name`, `mother_first_name`, `mother_middle_name`, `mother_last_name`, `mother_index`, `father_index`, `birth_order`, `month_of_birth`, `day_of_birth`, `year_of_birth`, `age`, `age_in_months`, `sex`, `permanent_address`, `residence_municipality_city`, `residence_province`, `birth_municipality_city`, `birth_province`, `contact_numbers`, `email_address`, `nationality`, `highest_educational_attainment`, `civil_status`, `living_with_partner`, `number_of_children`, `presently_pregnant`, `current_occupation`, `prev_occupation`, `work_abroad`, `work_abroad_month`, `work_abroad_year`, `work_abroad_based`, `work_abroad_country`) VALUES
 (1, '12345678', '123456789012', 'Juan', 'dela ', 'Cruz', 'Maria', 'Cristina', 'Lopez', 'Ma', 'Mr', '1', 11, 22, 1994, 18, 0, 'm', '9553 Theatre Dr. Greer, SC 29650', 'Istanbul', 'Turkey', 'Rio de Janeiro', 'Brazil', '8751234', 'jdelacruz01@gmail.com', 'German', 1, 1, 0, 12, 'n/a', 'n/a', 'Barista', 1, 10, 2000, 0, 'South Korea'),
 (2, '87654321', '098765432109', 'Vasanta', 'Savino', 'Mancuso', 'Gisilfrid', 'Slavko', 'Brune', 'Gi', 'Ve', '2', 1, 1, 2015, 0, 11, 'f', '2626 Burwell Heights Road, Beaumont, Texas', 'Beaumont', 'Texas', 'Abilene', 'Texas', '8191716', 'vasantamancuso1@gmail.com', 'Filipino', 3, 1, 1, 2, 'yes', 'Accountant', 'n/a', 1, 2, 2013, 1, 'United States of America');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `ci_sessions`
---
-ALTER TABLE `ci_sessions`
-  ADD KEY `ci_sessions_timestamp` (`timestamp`);
-
---
--- Indexes for table `patient_counselor_record`
---
-ALTER TABLE `patient_counselor_record`
-  ADD PRIMARY KEY (`patient_id`,`staff_id`),
-  ADD KEY `patient_id` (`patient_id`,`staff_id`),
-  ADD KEY `staff_id` (`staff_id`);
-
---
--- Indexes for table `patient_history_record`
---
-ALTER TABLE `patient_history_record`
-  ADD PRIMARY KEY (`patient_id`),
-  ADD KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `patient_medtech_record`
---
-ALTER TABLE `patient_medtech_record`
-  ADD PRIMARY KEY (`patient_id`,`staff_id`),
-  ADD KEY `patient_id` (`patient_id`,`staff_id`),
-  ADD KEY `staff_id` (`staff_id`);
-
---
--- Indexes for table `patient_mother_record`
---
-ALTER TABLE `patient_mother_record`
-  ADD PRIMARY KEY (`patient_id`),
-  ADD KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `patient_reason_record`
---
-ALTER TABLE `patient_reason_record`
-  ADD PRIMARY KEY (`patient_id`),
-  ADD UNIQUE KEY `patient_id` (`patient_id`);
-
---
--- Indexes for table `patient_record`
---
-ALTER TABLE `patient_record`
-  ADD PRIMARY KEY (`patient_id`);
-
---
--- Indexes for table `patient_saccl_record`
---
-ALTER TABLE `patient_saccl_record`
-  ADD PRIMARY KEY (`patient_id`,`staff_id`),
-  ADD KEY `patient_id` (`patient_id`,`staff_id`),
-  ADD KEY `staff_id` (`staff_id`);
-
---
--- Indexes for table `staff_record`
---
-ALTER TABLE `staff_record`
-  ADD PRIMARY KEY (`staff_id`,`testing_facility_id`),
-  ADD KEY `testing_facility_id` (`testing_facility_id`);
-
---
--- Indexes for table `testing_facility_record`
---
-ALTER TABLE `testing_facility_record`
-  ADD PRIMARY KEY (`testing_facility_id`);
-
---
--- Indexes for table `visitor_record`
---
-ALTER TABLE `visitor_record`
-  ADD PRIMARY KEY (`patient_id`);
 
 --
 -- Constraints for dumped tables

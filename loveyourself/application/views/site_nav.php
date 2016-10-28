@@ -1,20 +1,52 @@
-<?php if($this->session->flashdata('login_error') || $this->session->flashdata('login_prohibited')){ ?>
-	<script type="text/javascript">
+<!-- Edit Log
+	Oct 8, 2016 - Added JQuery scripts for forgot password modals
+	Oct 10, 2016 - Forgot password feature
+				 	- works perfectly in pc
+				 	- has modal errors in mobile (probably because of ob_end_clean()) 
+	Oct 11, 2016 - Currently working on:
+					- view only assigned
+-->
+
+<!--JQuery Scripts for Forgot Password Modals -->
+
+	<?php if($this->session->flashdata('login_error') || $this->session->flashdata('login_prohibited')){ ?>
+		<script type="text/javascript">
+			$(window).load(function(){
+				$('#myModal_LogIn').modal('show');
+			});
+		</script>
+	<?php } ?>
+	<?php if($this->session->flashdata('query_email_success') !== null){ ?>
+		<!--Temporary Code-->
+		<script type="text/javascript">
 		$(window).load(function(){
-			$('#myModal_LogIn').modal('show');
-		});
-	</script>
-<?php } ?>
-<?php if($this->session->flashdata('query_email')){ ?>
-	<!--Temporary Code-->
+				$('#myModal_EmailSent').modal('show');
+			});
+		</script>
+		}
+	<?php } ?>
+	<?php if($this->session->flashdata('Wrong_Form_Input_Forgot_Password') !== null || $this->session->flashdata('query_email_failure') !== null){ ?>
+		<!--Temporary Code-->
+		<script type="text/javascript">
+		$(window).load(function(){
+				$('#myModal_ForgotPassword').modal('show');
+			});
+		</script>
+		}
+	<?php } ?>
+
 	<script type="text/javascript">
-	$(window).load(function(){
-			$('#myModal_ForgotPassword').modal('show');
-			// $("p").text("Hello world!");
+		$(document).ready(function(){
+			$("#forgot_password_link").click(function(){
+	    		$("#myModal_LogIn").modal('hide');
+			});
+			$("#forgot_password_submit_button").click(function(){
+	    		$("#myModal_ForgotPassword").modal('hide');
+			});
+
 		});
+
 	</script>
-	}
-<?php } ?>
 
 <body style = 'background-color:#E0CBA8';>
         <div class = "container">
@@ -121,7 +153,11 @@
 										<div class="checkbox">
 										  <label><input type="checkbox" value="" checked>Remember me</label>
 										</div>
-										  <p><a href="#myModal_ForgotPassword" data-toggle="modal" data-target="#myModal_ForgotPassword">Forgot Password?</a></p>
+										  <!--Redirect the user to a new modal upon click which asks the user's account and email
+											  Hide this login div upon clicking the link
+										  -->
+
+										  <p><a id = "forgot_password_link" href="#myModal_ForgotPassword" data-toggle="modal" data-target="#myModal_ForgotPassword">Forgot Password?</a></p>
 										  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
 									  </form>
 									</div>
@@ -143,8 +179,13 @@
 									<div class="modal-header" style="padding:35px 50px;">
 									  <button type="button" class="close" data-dismiss="modal">&times;</button>
 									  <h4><span class="glyphicon glyphicon-lock"></span> Forgot Password</h4>
-									  <?php  if($this->session->flashdata('query_email_success')) echo $this->session->flashdata('query_email_success');
-											 else if($this->session->flashdata('query_email_failure')) echo $this->session->flashdata('query_email_failure'); ?>
+									  <?php 
+									  	if($this->session->flashdata('login_error_in_forgot_password_modal') !== null
+									  		||
+									  		$this->session->flashdata('query_email_failure') !== null){
+									  		echo "Invalid username or email.";
+									  	}
+									   ?>
 									</div>
 									<div class="modal-body" style="padding:40px 50px;">
 									  <form role="form" method="post" action="<?php echo base_url(); ?>login/user_forgot_password">
@@ -179,17 +220,60 @@
 										  
 										</div>
 										<div id="capsWarning" class="alert alert-DANGER" style="display:none;"><strong>Caps Lock is on.</strong></div>
-										  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Submit</button>
+										  <button type="submit" class="btn btn-success btn-block" id = "forgot_password_submit_button"><span class="glyphicon glyphicon-off"></span> Submit</button>
 									  </form>
 									</div>
 									<div class="modal-footer">
-									  <button type="submit" class="btn btn-danger btn-default pull-center" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+									  <button type="submit" class="btn btn-danger btn-default pull-center close_forgot_password" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
 									  
 									</div>
 								  </div> 
 								</div>
 								</div>
 							  
+							   <!--Email Sent Modal-->
+
+								<div class="modal fade" id="myModal_EmailSent" role="dialog" style="display: none;">
+								<div class="modal-dialog">
+								  <div class="modal-content">
+									<div class="modal-header" style="padding:35px 50px;">
+									  <button type="button" class="close" data-dismiss="modal">&times;</button>
+									  <h4><span class="glyphicon glyphicon-info-sign"></span> 
+
+									  <?php 
+										  if($this->session->flashdata('send_email_failure')){
+										  	echo 'Email error!';
+										  }
+										  else{
+										  	echo 'Email Sent!';
+										  }
+
+									  ?>
+
+									   </h4>
+									  
+									</div>
+									<div class="modal-body" style="padding:40px 50px;">
+										<?php 
+											if($this->session->flashdata('send_email_failure')){
+												echo $this->session->flashdata('send_email_failure');
+											}
+											else if($this->session->flashdata('query_email_success') !== null){
+												echo "A new password has been sent to <i>".$this->session->flashdata('email_address')."</i>." ;
+											}
+											else{
+												echo "Please retry this action.";
+											}
+										?>
+									  
+									</div>
+									<div class="modal-footer">
+									  <button type="submit" class="btn btn-danger btn-default pull-center" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+									  
+									</div>
+								  </div> 
+								</div>
+								</div>
 
 						  <?php } ?>
 

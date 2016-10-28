@@ -2726,7 +2726,6 @@ $data = array(
     'type' => 'submit',
     'content' => 'Generate PDF',
 	'formaction' => 'pdf',
-	'formtarget' => '_blank',
 	'class' => 'btn btn-default btn-lg'
 );
 

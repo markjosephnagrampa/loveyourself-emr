@@ -23,7 +23,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/loveyourself';
+	// TEMPORARY CODE
+		
+		// For localhost configuration
+		 $config['base_url'] = 'http://localhost/loveyourself';
+
+		// For agila configuration
+		//$config['base_url'] = 'http://agila.upm.edu.ph/~mjnagrampa/loveyourself';
 
 /*
 |--------------------------------------------------------------------------
