@@ -7,10 +7,16 @@
 					 - Done: Auto-generate counselor's name.
 					 - Edited: SQL Insert Conventions and n/a comparison cases.
 					 - Fixed: Wrong values being displayed in PDF form
+<<<<<<< HEAD
 		Oct 12, 2016
 					 - Finished: PDF for reference codes (first timer and non-first timer)
 					 - Finished: Updating non-first-timer refcode in DB
 				To do:
+=======
+					 - Finished: PDF for reference codes (first timer and non-first timer)
+				To do:
+					 - DB Verification for non-first timers
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 					 - Link these features with Mora's form query
 					 - Upload on GitHub, FB, and Agila ASAP!
 
@@ -368,6 +374,7 @@ class Site extends CI_Controller {
         $this->load->view("site_nav");
         $this->load->view('non_first_timer_schedule');
         $this->load->view('site_footer');
+<<<<<<< HEAD
     }*/
 
     // Edited Oct 12, 2016
@@ -420,6 +427,23 @@ class Site extends CI_Controller {
 						$this->load->view("non_first_timer_refcode",$result);
 						$this->load->view('site_footer');
 			}
+=======
+    }
+
+    // Edited Oct 11, 2016 (Temporary)
+
+		// Loads refcode page for returning patients
+    	// Note: needs to check if actual DB record exists
+		public function refcode_nonfirsttimer(){
+			
+			$result['reference_code'] = $this->database_query->generate_ref_code();
+			$this->session->set_userdata('website_visitor_refcode', $result['reference_code']);
+			$this->load->view('dependencies');
+			$this->load->view('site_header');
+			$this->load->view("site_nav");
+			$this->load->view("non_first_timer_refcode",$result);
+			$this->load->view('site_footer');
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 			
 		}
 
@@ -448,10 +472,15 @@ class Site extends CI_Controller {
 			if($this->input->post('refcode_PDF')){
 				$result['reference_code'] = $this->session->userdata('website_visitor_refcode');
 				$this->load->view("pdf_refcode",$result);
+<<<<<<< HEAD
 
 				// Unset unneCESSary session variables. (MARKed finished) :)
 
 				$this->session->unset_userdata('website_visitor_refcode');
+=======
+				// To do: Must unset the session variable
+					// $this->session->unset_userdata('non_first_timer_refcode');
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 			}
 			else{
 				redirect(base_url());
@@ -984,6 +1013,7 @@ class Site extends CI_Controller {
 					$data['visitor_record']['birth_municipality_city'] = $this->_writeULC(' ',30);
 
 					$data['visitor_record']['birth_province'] = $this->_writeULC(' ',30);
+<<<<<<< HEAD
 
 					$data['visitor_record']['contact_numbers'] = $this->_writeULC(' ',30);
 					$data['visitor_record']['email_address'] = $this->_writeULC(' ',50);
@@ -1167,6 +1197,191 @@ class Site extends CI_Controller {
 					$data['m_sex_at_birth_check'] = ($data['visitor_record']['sex']=='m' ? true : false);
 					$data['f_sex_at_birth_check'] = ($data['visitor_record']['sex']=='f' ? true : false);
 
+=======
+
+					$data['visitor_record']['contact_numbers'] = $this->_writeULC(' ',30);
+					$data['visitor_record']['email_address'] = $this->_writeULC(' ',50);
+
+					$data['visitor_record']['work_abroad_country'] = $this->_writeULC(' ',50);
+
+
+
+					// Checkboxes with DB Dependencies
+					$data['philhealth_number_check'] = false;
+					$data['m_sex_at_birth_check'] = false;
+					$data['f_sex_at_birth_check'] = false;
+
+					$data['current_occupation'] = $this->_writeULC('',50);
+					$data['prev_occupation'] = $this->_writeULC('',50);
+
+					$data['presently_pregnant_no'] = false;
+					$data['presently_pregnant_yes'] = false;
+
+					$data['work_abroad_n'] = false;
+					$data['work_abroad_y'] = false;
+
+					$data['work_abroad_based_ship'] = false;
+					$data['work_abroad_based_land'] = false;
+
+					//18.
+				
+					$data['fspyear']=$this->_writeULC(' ',12);
+					$data['fsp'][0] = ' ';
+					$data['fsp'][1] = ' ';
+					$data['fsp'][2] = ' ';
+					$data['fsp'][3] = ' ';
+					$data['fsp'][4] = ' ';
+
+					$data['mspyear']=$this->_writeULC(' ',12);
+					$data['msp'][0] = ' ';
+					$data['msp'][1] = ' ';
+					$data['msp'][2] = ' ';
+					$data['msp'][3] = ' ';
+					$data['msp'][4] = ' ';
+
+					//19.
+
+					$data['hiv_testingno']=false;
+					$data['hiv_testingyes']=false;
+					$data['month_last_test'][0] = ' ';
+					$data['month_last_test'][1] = ' '; 
+
+					$data['year_last_test'][0] = ' ';
+					$data['year_last_test'][1] = ' '; 
+					$data['year_last_test'][0] = ' ';
+					$data['year_last_test'][1] = ' '; 
+
+					$data['testing_site']=$this->_writeULC(' ',25);
+					$data['testing_city']=$this->_writeULC(' ',25);
+					$data['result_before_positive']=false;
+					$data['result_before_negative']=false;
+
+					$data['clinical_pic_asymp']=false;
+					$data['clinical_pic_symp']=false;
+
+					$data['description_ssx']=$this->_writeULC('',50);
+					$data['who_staging']=$this->_writeULC('',10);
+
+					$data['no_avail_physician'] = false;
+	    		// For replacement
+					$s_testing_facility_id = ($this->session->userdata('s_testing_facility_id')!== null? $this->session->userdata('s_testing_facility_id'):1);
+					$data['counselor_name']=$this->_writeULC(' ',60);
+					$data['confirmed_by']=$this->_writeULC(' ',60);
+
+					// Get the Patient's Record from the database
+
+					$data['visitor_record'] = $this->database_query->getVisitorWithPID($patientID);
+					$data['patient_medtech_record'] = $this->database_query->getMedTechWithPID($patientID);
+					$data['patient_mother_record'] = $this->database_query->getMotherWithPID($patientID);
+					$data['patient_saccl_record'] = $this->database_query->getSACCLWithPID($patientID);
+					$data['patient_record'] = $this->database_query->getPatientWithPID($patientID);
+					$data['patient_history_record'] = $this->database_query->getHistoryWithPID($patientID);
+					$data['patient_reason_record'] = $this->database_query->getPatientReasonWithPID($patientID);
+					$data['patient_counselor_record'] = $this->database_query->getPatientCounselorWithPID($patientID);
+
+					$data['testing_facility_record'] = $this->database_query->getTestingFacilityWithID($s_testing_facility_id);
+
+				// Check if queried tables contain values
+				 
+				// 1b. Visitor Record - Not Null Query 
+
+				if(!empty($data['visitor_record'])){
+
+					// Parsing
+
+					// Special
+					$data['patient_full_name'] = $data['visitor_record']['first_name']. ' ' .$data['visitor_record']['middle_name']. ' ' .$data['visitor_record']['last_name'];
+					$data['patient_full_name'] = $this->_writeULC($data['patient_full_name'],60);
+
+					$data['date']=date('m/d/Y');
+					$data['date'] = $this->_writeULC($data['date'],18);
+
+					$data['nationality_f'] = (strtolower($data['visitor_record']['nationality']) == 'filipino' ? true: false);
+					$data['nationality_check'] = (strtolower($data['visitor_record']['nationality']) != 'filipino' ? true: false);
+					$data['nationality'] = (strtolower($data['visitor_record']['nationality']) != 'filipino' ? $this->_writeULC(strtoupper($data['visitor_record']['nationality']),30): $this->_writeULC('',30));
+
+					$data['hea_none']= ($data['visitor_record']['highest_educational_attainment'] == 1 ? true: false);
+					$data['hea_hs']= ($data['visitor_record']['highest_educational_attainment'] == 2 ? true: false);
+					$data['hea_voc']= ($data['visitor_record']['highest_educational_attainment'] == 3 ? true: false);
+					$data['hea_elem']= ($data['visitor_record']['highest_educational_attainment'] == 4 ? true: false);
+					$data['hea_coll']= ($data['visitor_record']['highest_educational_attainment'] == 5 ? true: false);
+					$data['hea_postgrad']= ($data['visitor_record']['highest_educational_attainment'] == 6 ? true: false);
+
+					$data['civstat_single']= ($data['visitor_record']['civil_status'] == 1 ? true: false);
+					$data['civstat_married']= ($data['visitor_record']['civil_status'] == 2 ? true: false);
+					$data['civstat_separated']= ($data['visitor_record']['civil_status'] == 3 ? true: false);
+					$data['civstat_widowed']= ($data['visitor_record']['civil_status'] == 4 ? true: false);
+
+					$data['living_with_no']= ($data['visitor_record']['living_with_partner'] == 0 ? true: false);
+					$data['living_with_yes']= ($data['visitor_record']['living_with_partner'] == 1 ? true: false);
+
+					// Individual Boxes
+
+					if(strtolower($data['visitor_record']['philhealth_number']) !== 'n/a'){
+						$data['patient_philhealth_number']=$this->_paddZ($data['visitor_record']['philhealth_number'],12);
+					}
+
+					$data['visitor_record']['mother_index'] = strtoupper($data['visitor_record']['mother_index']);
+					$data['visitor_record']['mother_index'] = str_split($data['visitor_record']['mother_index']);
+
+					$data['visitor_record']['father_index'] = strtoupper($data['visitor_record']['father_index']);
+					$data['visitor_record']['father_index'] = str_split($data['visitor_record']['father_index']);
+
+					$data['visitor_record']['birth_order']=$this->_paddZ($data['visitor_record']['birth_order'],2);
+					$data['visitor_record']['month_of_birth']=$this->_paddZ($data['visitor_record']['month_of_birth'],2);
+					$data['visitor_record']['day_of_birth']=$this->_paddZ($data['visitor_record']['day_of_birth'],2);
+					$data['visitor_record']['year_of_birth']=$this->_paddZ($data['visitor_record']['year_of_birth'],4);
+
+					$data['visitor_record']['number_of_children']=$this->_paddZ($data['visitor_record']['number_of_children'],3);
+
+					$data['visitor_record']['age']=$this->_paddZ($data['visitor_record']['age'],2);
+					$data['visitor_record']['age_in_months']=$this->_paddZ($data['visitor_record']['age_in_months'],2);
+
+					$data['work_abroad_month']=$this->_paddZ($data['visitor_record']['work_abroad_month'],2);
+					$data['work_abroad_year']=$this->_paddZ($data['visitor_record']['work_abroad_year'],4);
+
+
+
+					// Convert Strings to Uppercase
+					$data['visitor_record']['first_name'] = strtoupper($data['visitor_record']['first_name']);
+					$data['visitor_record']['middle_name'] = strtoupper($data['visitor_record']['middle_name']);
+					$data['visitor_record']['last_name'] = strtoupper($data['visitor_record']['last_name']);
+
+					$data['visitor_record']['mother_first_name'] = strtoupper($data['visitor_record']['mother_first_name']);
+					$data['visitor_record']['mother_middle_name'] = strtoupper($data['visitor_record']['mother_middle_name']);
+					$data['visitor_record']['mother_last_name'] = strtoupper($data['visitor_record']['mother_last_name']);
+
+					$data['visitor_record']['permanent_address'] = strtoupper($data['visitor_record']['permanent_address']);
+					$data['visitor_record']['permanent_address'] = $this->_writeULC($data['visitor_record']['permanent_address'],75);
+
+					$data['visitor_record']['residence_municipality_city'] = strtoupper($data['visitor_record']['residence_municipality_city']);
+					$data['visitor_record']['residence_municipality_city'] = $this->_writeULC($data['visitor_record']['residence_municipality_city'],30);
+
+					$data['visitor_record']['residence_province'] = strtoupper($data['visitor_record']['residence_province']);
+					$data['visitor_record']['residence_province'] = $this->_writeULC($data['visitor_record']['residence_province'],30);
+
+					$data['visitor_record']['birth_municipality_city'] = strtoupper($data['visitor_record']['birth_municipality_city']);
+					$data['visitor_record']['birth_municipality_city'] = $this->_writeULC($data['visitor_record']['birth_municipality_city'],30);
+
+					$data['visitor_record']['birth_province'] = strtoupper($data['visitor_record']['birth_province']);
+					$data['visitor_record']['birth_province'] = $this->_writeULC($data['visitor_record']['birth_province'],30);
+
+					$data['visitor_record']['contact_numbers'] = $this->_writeULC($data['visitor_record']['contact_numbers'],30);
+
+					$data['visitor_record']['email_address'] = strtoupper($data['visitor_record']['email_address']);
+					$data['visitor_record']['email_address']=$this->_writeULC($data['visitor_record']['email_address'],50);
+
+					$data['visitor_record']['work_abroad_country'] = strtoupper($data['visitor_record']['work_abroad_country']);
+					$data['visitor_record']['work_abroad_country'] = $this->_writeULC($data['visitor_record']['work_abroad_country'],50);
+
+
+
+					// Checkboxes with DB Dependencies
+					$data['philhealth_number_check'] = (strtolower($data['visitor_record']['philhealth_number']=='n/a')? true : false);
+					$data['m_sex_at_birth_check'] = ($data['visitor_record']['sex']=='m' ? true : false);
+					$data['f_sex_at_birth_check'] = ($data['visitor_record']['sex']=='f' ? true : false);
+
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 					$data['current_occupation'] = (strtolower($data['visitor_record']['current_occupation']!=='n/a') ? $this->_writeULC(strtoupper($data['visitor_record']['current_occupation']),50): $this->_writeULC('',50));
 					$data['prev_occupation'] = (strtolower($data['visitor_record']['prev_occupation']!=='n/a') ? $this->_writeULC(strtoupper($data['visitor_record']['prev_occupation']),50): $this->_writeULC('',50));
 
@@ -1289,6 +1504,7 @@ class Site extends CI_Controller {
 						$data['historyno']=false;
 					}
 				}
+<<<<<<< HEAD
 
 				// 7b. patient_history_record not null
 				if(!empty($data['patient_history_record'])){
@@ -1311,6 +1527,30 @@ class Site extends CI_Controller {
 
 						$data['rbtyear']=($data['patient_history_record']['had_blood_transfusion_year'] != 0 ? $this->_writeULC($data['patient_history_record']['had_blood_transfusion_year'],12) : $this->_writeULC('N/A',12));
 
+=======
+
+				// 7b. patient_history_record not null
+				if(!empty($data['patient_history_record'])){
+					//17.
+						// RBT
+						$data['rbtno']=false;
+						$data['rbtyes']=false;
+
+
+						$user_history = $data['patient_history_record']['had_blood_transfusion'];
+						if($user_history == 0){
+							$data['rbtno']=true;
+							$data['rbtyes']=false;
+							
+						}
+						else if($user_history == 1){ 
+							$data['rbtno']=false;
+							$data['rbtyes']=true;
+						}
+
+						$data['rbtyear']=($data['patient_history_record']['had_blood_transfusion_year'] != 0 ? $this->_writeULC($data['patient_history_record']['had_blood_transfusion_year'],12) : $this->_writeULC('N/A',12));
+
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 						// Injected
 						$data['injectedno']=false;
 						$data['injectedyes']=false;
@@ -1346,6 +1586,7 @@ class Site extends CI_Controller {
 						}
 
 						$data['npyear']=($data['patient_history_record']['accidental_needle_prick_year'] != 0 ? $this->_writeULC($data['patient_history_record']['accidental_needle_prick_year'],12) : $this->_writeULC('N/A',12));
+<<<<<<< HEAD
 
 						// STI
 						$data['stino']=false;
@@ -1364,6 +1605,26 @@ class Site extends CI_Controller {
 
 						$data['stiyear']=($data['patient_history_record']['sexually_transmitted_infections_year'] != 0 ? $this->_writeULC($data['patient_history_record']['sexually_transmitted_infections_year'],12) : $this->_writeULC('N/A',12));
 
+=======
+
+						// STI
+						$data['stino']=false;
+						$data['stiyes']=false;
+
+						$user_history4 = $data['patient_history_record']['sexually_transmitted_infections'];
+						if($user_history4 == 0){
+							$data['stino']=true;
+							$data['stiyes']=false;
+							
+						}
+						else if($user_history4 == 1){ 
+							$data['stino']=false;
+							$data['stiyes']=true;
+						}
+
+						$data['stiyear']=($data['patient_history_record']['sexually_transmitted_infections_year'] != 0 ? $this->_writeULC($data['patient_history_record']['sexually_transmitted_infections_year'],12) : $this->_writeULC('N/A',12));
+
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 						// Sex Female
 						$data['sfno']=false;
 						$data['sfyes']=false;
@@ -1437,6 +1698,58 @@ class Site extends CI_Controller {
 						$data['psyear']=($data['patient_history_record']['sex_for_payment_year'] != 0 ? $this->_writeULC($data['patient_history_record']['sex_for_payment_year'],12) : $this->_writeULC('N/A',12));
 
 				}
+<<<<<<< HEAD
+
+				// 8b. patient_record not null
+				if(!empty($data['patient_record']) && empty($data['visitor_record'])){
+
+					// Special
+					$data['patient_full_name'] = $data['patient_record']['first_name']. ' ' .$data['patient_record']['middle_name']. ' ' .$data['patient_record']['last_name'];
+					$data['patient_full_name'] = $this->_writeULC($data['patient_full_name'],60);
+
+					$data['date']=date('m/d/Y');
+					$data['date'] = $this->_writeULC($data['date'],18);
+
+					$data['nationality_f'] = (strtolower($data['patient_record']['nationality']) == 'filipino' ? true: false);
+					$data['nationality_check'] = (strtolower($data['patient_record']['nationality']) != 'filipino' ? true: false);
+					$data['nationality'] = (strtolower($data['patient_record']['nationality']) != 'filipino' ? $this->_writeULC(strtoupper($data['patient_record']['nationality']),30): $this->_writeULC('',30));
+
+					$data['hea_none']= ($data['patient_record']['highest_educational_attainment'] == 1 ? true: false);
+					$data['hea_hs']= ($data['patient_record']['highest_educational_attainment'] == 2 ? true: false);
+					$data['hea_voc']= ($data['patient_record']['highest_educational_attainment'] == 3 ? true: false);
+					$data['hea_elem']= ($data['patient_record']['highest_educational_attainment'] == 4 ? true: false);
+					$data['hea_coll']= ($data['patient_record']['highest_educational_attainment'] == 5 ? true: false);
+					$data['hea_postgrad']= ($data['patient_record']['highest_educational_attainment'] == 6 ? true: false);
+
+					$data['civstat_single']= ($data['patient_record']['civil_status'] == 1 ? true: false);
+					$data['civstat_married']= ($data['patient_record']['civil_status'] == 2 ? true: false);
+					$data['civstat_separated']= ($data['patient_record']['civil_status'] == 3 ? true: false);
+					$data['civstat_widowed']= ($data['patient_record']['civil_status'] == 4 ? true: false);
+
+					$data['living_with_no']= ($data['patient_record']['living_with_partner'] == 0 ? true: false);
+					$data['living_with_yes']= ($data['patient_record']['living_with_partner'] == 1 ? true: false);
+
+					// Individual Boxes
+					if(strtolower($data['patient_record']['philhealth_number']) !== 'n/a'){
+						$data['patient_philhealth_number']=$this->_paddZ($data['patient_record']['philhealth_number'],12);
+					}
+
+					$data['visitor_record']['mother_index'] = strtoupper($data['patient_record']['mother_index']);
+					$data['visitor_record']['mother_index'] = str_split($data['visitor_record']['mother_index']);
+
+					$data['visitor_record']['father_index'] = strtoupper($data['patient_record']['father_index']);
+					$data['visitor_record']['father_index'] = str_split($data['visitor_record']['father_index']);
+
+					$data['visitor_record']['birth_order']=$this->_paddZ($data['patient_record']['birth_order'],2);
+					$data['visitor_record']['month_of_birth']=$this->_paddZ($data['patient_record']['month_of_birth'],2);
+					$data['visitor_record']['day_of_birth']=$this->_paddZ($data['patient_record']['day_of_birth'],2);
+					$data['visitor_record']['year_of_birth']=$this->_paddZ($data['patient_record']['year_of_birth'],4);
+
+					$data['visitor_record']['number_of_children']=$this->_paddZ($data['patient_record']['number_of_children'],3);
+
+					$data['visitor_record']['age']=$this->_paddZ($data['patient_record']['age'],2);
+					$data['visitor_record']['age_in_months']=$this->_paddZ($data['patient_record']['age_in_months'],2);
+=======
 
 				// 8b. patient_record not null
 				if(!empty($data['patient_record']) && empty($data['visitor_record'])){
@@ -1490,9 +1803,18 @@ class Site extends CI_Controller {
 
 					$data['work_abroad_month']=$this->_paddZ($data['patient_record']['work_abroad_month'],2);
 					$data['work_abroad_year']=$this->_paddZ($data['patient_record']['work_abroad_year'],4);
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
+
+					$data['work_abroad_month']=$this->_paddZ($data['patient_record']['work_abroad_month'],2);
+					$data['work_abroad_year']=$this->_paddZ($data['patient_record']['work_abroad_year'],4);
 
 
+					// Convert Strings to Uppercase
+					$data['visitor_record']['first_name'] = strtoupper($data['patient_record']['first_name']);
+					$data['visitor_record']['middle_name'] = strtoupper($data['patient_record']['middle_name']);
+					$data['visitor_record']['last_name'] = strtoupper($data['patient_record']['last_name']);
 
+<<<<<<< HEAD
 					// Convert Strings to Uppercase
 					$data['visitor_record']['first_name'] = strtoupper($data['patient_record']['first_name']);
 					$data['visitor_record']['middle_name'] = strtoupper($data['patient_record']['middle_name']);
@@ -1518,11 +1840,37 @@ class Site extends CI_Controller {
 
 					$data['visitor_record']['email_address'] = strtoupper($data['patient_record']['email_address']);
 					$data['visitor_record']['email_address']=$this->_writeULC($data['visitor_record']['email_address'],50);
+=======
+
+					$data['visitor_record']['permanent_address'] = strtoupper($data['patient_record']['permanent_address']);
+					$data['visitor_record']['permanent_address'] = $this->_writeULC($data['visitor_record']['permanent_address'],75);
+
+					$data['visitor_record']['residence_municipality_city'] = strtoupper($data['patient_record']['residence_municipality_city']);
+					$data['visitor_record']['residence_municipality_city'] = $this->_writeULC($data['visitor_record']['residence_municipality_city'],30);
+
+					$data['visitor_record']['residence_province'] = strtoupper($data['patient_record']['residence_province']);
+					$data['visitor_record']['residence_province'] = $this->_writeULC($data['visitor_record']['residence_province'],30);
+
+					$data['visitor_record']['birth_municipality_city'] = strtoupper($data['patient_record']['birth_municipality_city']);
+					$data['visitor_record']['birth_municipality_city'] = $this->_writeULC($data['visitor_record']['birth_municipality_city'],30);
+
+					$data['visitor_record']['birth_province'] = strtoupper($data['patient_record']['birth_province']);
+					$data['visitor_record']['birth_province'] = $this->_writeULC($data['visitor_record']['birth_province'],30);
+
+					$data['visitor_record']['contact_numbers'] = $this->_writeULC($data['patient_record']['contact_numbers'],30);
+
+					$data['visitor_record']['email_address'] = strtoupper($data['patient_record']['email_address']);
+					$data['visitor_record']['email_address']=$this->_writeULC($data['visitor_record']['email_address'],50);
+
+					$data['visitor_record']['work_abroad_country'] = strtoupper($data['patient_record']['work_abroad_country']);
+					$data['visitor_record']['work_abroad_country'] = $this->_writeULC($data['visitor_record']['work_abroad_country'],50);
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 
 					$data['visitor_record']['work_abroad_country'] = strtoupper($data['patient_record']['work_abroad_country']);
 					$data['visitor_record']['work_abroad_country'] = $this->_writeULC($data['visitor_record']['work_abroad_country'],50);
 
 
+<<<<<<< HEAD
 
 					// Checkboxes with DB Dependencies
 					$data['philhealth_number_check'] = (strtolower($data['patient_record']['philhealth_number']) =='n/a' ? true : false);
@@ -1550,6 +1898,34 @@ class Site extends CI_Controller {
 					$data['mspyear']=($data['patient_record']['sex_partner_male_year'] != 0 ? $this->_writeULC($data['patient_record']['sex_partner_male_year'],12) : $this->_writeULC('N/A',12));
 					$data['msp'] = $this->_paddZ($data['patient_record']['sex_partner_male_number'],5);
 
+=======
+					// Checkboxes with DB Dependencies
+					$data['philhealth_number_check'] = (strtolower($data['patient_record']['philhealth_number']) =='n/a' ? true : false);
+					$data['m_sex_at_birth_check'] = ($data['patient_record']['sex']=='m' ? true : false);
+					$data['f_sex_at_birth_check'] = ($data['patient_record']['sex']=='f' ? true : false);
+
+					$data['current_occupation'] = (strtolower($data['patient_record']['current_occupation']!=='n/a') ? $this->_writeULC(strtoupper($data['patient_record']['current_occupation']),50): $this->_writeULC('',50));
+					$data['prev_occupation'] = (strtolower($data['patient_record']['prev_occupation']!=='n/a') ? $this->_writeULC(strtoupper($data['patient_record']['prev_occupation']),50): $this->_writeULC('',50));
+
+					$data['presently_pregnant_no'] = ($data['patient_record']['presently_pregnant']=='no'  ? true : false);
+					$data['presently_pregnant_yes'] = ($data['patient_record']['presently_pregnant']=='yes'  ? true : false);
+
+					$data['work_abroad_n'] = ($data['patient_record']['work_abroad']=='0' ? true : false);
+					$data['work_abroad_y'] = ($data['patient_record']['work_abroad']=='1' ? true : false);
+
+					$data['work_abroad_based_ship'] = ($data['patient_record']['work_abroad_based']=='0' ? true : false);
+					$data['work_abroad_based_land'] = ($data['patient_record']['work_abroad_based']=='1' ? true : false);
+
+					//18.
+					$data['fspyear']=($data['patient_record']['sex_partner_female_year'] != 0 ? $this->_writeULC($data['patient_record']['sex_partner_female_year'],12) : $this->_writeULC('N/A',12));
+
+
+					$data['fsp'] = $this->_paddZ($data['patient_record']['sex_partner_female_number'],5);
+
+					$data['mspyear']=($data['patient_record']['sex_partner_male_year'] != 0 ? $this->_writeULC($data['patient_record']['sex_partner_male_year'],12) : $this->_writeULC('N/A',12));
+					$data['msp'] = $this->_paddZ($data['patient_record']['sex_partner_male_number'],5);
+
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 					//19.
 						
 					$data['hiv_testingno']=false;
@@ -1676,6 +2052,7 @@ class Site extends CI_Controller {
 						$data['clinical_pic_asymp']=false;
 						$data['clinical_pic_symp']=true;
 					}
+<<<<<<< HEAD
 
 					
 					$data['description_ssx']=$data['patient_counselor_record']['clinical_picture_ssx'];
@@ -1710,8 +2087,44 @@ class Site extends CI_Controller {
 
 	    		$data['medtech_whole_name'] = strtoupper($this->input->post('medtech_name'));
 	    		$data['medtech_whole_name'] = $this->_writeULC($data['medtech_whole_name'],70);
+=======
 
+					
+					$data['description_ssx']=$data['patient_counselor_record']['clinical_picture_ssx'];
+					$data['description_ssx'] = strtoupper($data['description_ssx']);
+					$data['description_ssx']=$this->_writeULC($data['description_ssx'],50);
 
+					$data['who_staging']=$data['patient_counselor_record']['clinical_picture_who_staging'];
+					$data['who_staging'] = strtoupper($data['who_staging']);
+					$data['who_staging']=$this->_writeULC($data['who_staging'],10);
+
+					$data['no_avail_physician'] = ($data['patient_counselor_record']['clinical_picture_who_staging'] == null || strtolower($data['patient_counselor_record']['clinical_picture_who_staging']) == 'n/a'? true: false);
+				}
+
+			// Only edit 21,22, 24 if the page came from Form_Medtech View.
+	    	if ($this->input->post('generatePDFButton_Medtech')==true) {
+
+	    		// 21.
+	    		$data['testing_facility_record']['facility_name'] = strtoupper($this->input->post('facility_name'));
+	    		$data['testing_facility_record']['facility_name'] = $this->_writeULC($data['testing_facility_record']['facility_name'],75);
+
+				$data['testing_facility_record']['hiv_eqas_lab_code'] = strtoupper($this->input->post('hiv_lab_code'));
+				$data['testing_facility_record']['hiv_eqas_lab_code'] = $this->_writeULC($data['testing_facility_record']['hiv_eqas_lab_code'],20);
+
+				$data['testing_facility_record']['hiv_eqas_last_year'] = $this->_writeULC($this->input->post('year_hiv_lab_code'),28);
+				$data['testing_facility_record']['mailing_address'] = strtoupper($this->input->post('mailing_address'));
+	    		$data['testing_facility_record']['mailing_address'] = $this->_writeULC($data['testing_facility_record']['mailing_address'],75);
+				$data['testing_facility_record']['contact_numbers'] = $this->_writeULC($this->input->post('contact_numbers'),16);
+				$data['testing_facility_record']['email_address'] = strtoupper($this->input->post('email_address'));
+	    		$data['testing_facility_record']['email_address'] = $this->_writeULC($data['testing_facility_record']['email_address'],50);
+
+	    		// 22.
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
+
+	    		$data['medtech_whole_name'] = strtoupper($this->input->post('medtech_name'));
+	    		$data['medtech_whole_name'] = $this->_writeULC($data['medtech_whole_name'],70);
+
+<<<<<<< HEAD
 	    		$data['medtech_hiv_proficiency_number'] = strtoupper($this->input->post('hiv_prof_num'));
 	    		$data['medtech_hiv_proficiency_number'] = $this->_writeULC($data['medtech_hiv_proficiency_number'],40);
 
@@ -1723,8 +2136,22 @@ class Site extends CI_Controller {
 				$data['patient_medtech_record']['year_expired'] = $this->_paddZ($this->input->post('year_expired'),4);
 	    		
 				// 24.
+=======
 
+	    		$data['medtech_hiv_proficiency_number'] = strtoupper($this->input->post('hiv_prof_num'));
+	    		$data['medtech_hiv_proficiency_number'] = $this->_writeULC($data['medtech_hiv_proficiency_number'],40);
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 
+	    		$data['patient_medtech_record']['month_issued'] = $this->_paddZ($this->input->post('month_issued'),2);
+				$data['patient_medtech_record']['day_issued'] = $this->_paddZ($this->input->post('date_issued'),2);
+				$data['patient_medtech_record']['year_issued'] =$this->_paddZ($this->input->post('year_issued'),4);
+				$data['patient_medtech_record']['month_expired'] = $this->_paddZ($this->input->post('month_expired'),2);
+				$data['patient_medtech_record']['day_expired'] = $this->_paddZ($this->input->post('date_expired'),2);
+				$data['patient_medtech_record']['year_expired'] = $this->_paddZ($this->input->post('year_expired'),4);
+	    		
+				// 24.
+
+<<<<<<< HEAD
 				$data['patient_saccl_record']['saccl_lab_code'] = $this->_paddZ($this->input->post('saccl_labcode'),10);
 				$data['patient_saccl_record']['month_hiv_confirmed'] = $this->_paddZ($this->input->post('month_confirmed'),2);
 				$data['patient_saccl_record']['day_hiv_confirmed'] = $this->_paddZ($this->input->post('date_confirmed'),2);
@@ -1735,7 +2162,30 @@ class Site extends CI_Controller {
 
 				
 				$data['confirmed_by']= $this->_writeULC($this->input->post('confirmed_by'),60);
+=======
 
+				$data['patient_saccl_record']['saccl_lab_code'] = $this->_paddZ($this->input->post('saccl_labcode'),10);
+				$data['patient_saccl_record']['month_hiv_confirmed'] = $this->_paddZ($this->input->post('month_confirmed'),2);
+				$data['patient_saccl_record']['day_hiv_confirmed'] = $this->_paddZ($this->input->post('date_confirmed'),2);
+				$data['patient_saccl_record']['year_hiv_confirmed'] = $this->_paddZ($this->input->post('year_confirmed'),4);
+
+				$data['saccl_test_western_blot']= ($this->input->post('test_type') == 'western_blot' ? true: false);
+				$data['saccl_test_pcr']= ($this->input->post('test_type') == 'pcr_for_infants' ? true: false);
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
+
+				
+				$data['confirmed_by']= $this->_writeULC($this->input->post('confirmed_by'),60);
+
+<<<<<<< HEAD
+	    	}
+
+	    	// Only edit 15-20, 23 if the page came from Form_Counselor View.
+	    	 if ($this->input->post('generatePDFCounselor')==true) {
+		
+				
+				// Set Variables to null if query data doesn't exist
+
+=======
 
 	    	}
 
@@ -1745,6 +2195,7 @@ class Site extends CI_Controller {
 				
 				// Set Variables to null if query data doesn't exist
 
+>>>>>>> refs/remotes/origin/Visitor-Patient-Insert-Delete
 				// 5. Counselor Form
 				
 					// B. 15-20, 23
