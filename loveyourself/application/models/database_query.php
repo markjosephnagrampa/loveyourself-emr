@@ -224,5 +224,28 @@
 			$query = $this->db->get_where('staff_record', array('staff_id' => $staff_id));
 			return $query->row_array();
 		}
+
+		// Edited Oct 12, 2016
+			// Checks if non-first-timer patient exists (Query for same name and birthday)
+
+		public function get_non_first_timer_record($first_name,$middle_name,$last_name,$month_of_birth,$day_of_birth,$year_of_birth){
+			$query = $this->db->get_where('patient_record', 
+				array('first_name' => $first_name,
+					 'middle_name' => $middle_name,
+					 'last_name' => $last_name,
+					 'month_of_birth' => $month_of_birth,
+					 'day_of_birth' => $day_of_birth,
+					 'year_of_birth' => $year_of_birth,
+				 ));
+
+			return $query->row_array();
+		}
+
+		// Made: Oct 12, 2016
+		// Function for all database updates
+		public function updateRowWhere($table, $where = array(), $data = array()) {
+		    $this->db->where($where);
+		    $this->db->update($table, $data);
+		}
 	}
 ?>

@@ -7,7 +7,11 @@
                      <h1>M E D I C A L</h1>
 					 <h1>T E C H N O L O G I S T</h1>
                     <h2>      </h2>
-                     
+                     <?php 
+                     	if($this->session->flashdata('refcode_error')){
+                     		echo $this->session->flashdata('refcode_error');
+                     	}
+                     ?>
                      <?php echo form_open('site/form_profile');?>
                      <div class="form-group">
                         <?php 
