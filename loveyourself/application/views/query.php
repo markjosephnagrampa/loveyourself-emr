@@ -1,3 +1,9 @@
+<!--
+	Log:
+		Oct 12, 2016 - Edited: Month, Day, Year of Birth
+					 	- Added name fields
+-->
+
 <div class="container">
 <div class="container" id="content" style ='background-color: #FFFFFF;'>
 <div id="container">
@@ -11,10 +17,18 @@
     <div>
         <p> If you have signed-up with LoveYourself before, just enter your </p>
 		<p> name and birthday in the fields below for your reference code. </p>
+		<!--Edited Oct 12, 2016
+			Added: error message for form checking
+			-->
+			<?php if(isset($error_message))
+				echo '<p style="text-align:center; font-weight:bold; ">'.$error_message.'</p>';
+			 ?>
     </div>
     <div>
     <div>
-        <form method="post" action="<?php echo base_url(); ?>site/schedule_nonfirsttimer">
+    <!--Edited Oct 12, 2016-->
+    	<?php echo form_open(); ?>
+        <!--<form method="post" action="<?php echo base_url(); ?>site/schedule_nonfirsttimer">-->
             <table class="table">
                 <tr>      </tr>
                 <tr>
@@ -87,7 +101,27 @@
 						echo form_input($data);
 						?></td-->
 					<td>
-					<select class="form-control" id="monthOfBirth_query">
+					<!--Edited Oct 12, 2016-->
+						<!--Used form_dropdown option instead-->
+
+						<?php 
+							$options = array(
+						        '1'         => 'January',
+						        '2'           => 'February',
+						        '3'         => 'March',
+						        '4'        => 'April',
+						        '5'         => 'May',
+						        '6'           => 'June',
+						        '7'         => 'July',
+						        '8'        => 'August',
+						        '9'         => 'September',
+						        '10'        => 'October',
+						        '11'         => 'November',
+						        '12'        => 'December',
+							);
+						echo form_dropdown('monthOfBirth_query', $options, '1',['class' => "form-control", 'id' => "monthOfBirth_query"]);
+						 ?>
+					<!--<select class="form-control" id="monthOfBirth_query" name="monthOfBirth_query">
 						<option>January</option>
 						<option>February</option>
 						<option>March</option>
@@ -100,10 +134,10 @@
 						<option>October</option>
 						<option>November</option>
 						<option>December</option>
-					</select>
+					</select>-->
 				</td>
 				<td>
-					<select class="form-control" id="dayOfBirth_query">
+					<select class="form-control" id="dayOfBirth_query" name="dayOfBirth_query">
 						<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
 						<option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
 						<option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
@@ -113,7 +147,7 @@
 					</select>
 				</td>
 				<td>
-						<select class="form-control" id="yearOfBirth_query">
+						<select class="form-control" id="yearOfBirth_query" name="yearOfBirth_query">
 							<option>2016</option><option>2015</option><option>2014</option><option>2013</option><option>2012</option><option>2011</option>
 							<option>2010</option><option>2009</option><option>2008</option><option>2007</option><option>2006</option><option>2005</option><option>2004</option><option>2003</option><option>2002</option><option>2001</option>
 							<option>2000</option><option>1999</option><option>1998</option><option>1997</option><option>1996</option><option>1995</option><option>1994</option><option>1993</option><option>1992</option><option>1991</option>
@@ -137,6 +171,7 @@
 							'type' => 'submit',
 							'content' => 'Search',
 							'class' => 'btn btn-default',
+							'formaction' => 'schedule_nonfirsttimer',
 							'style' => 'float: right'
 						);
 						echo form_submit($data);?>
@@ -144,6 +179,8 @@
                 </tr>
             
             </table>
+            <!--Edited Oct 12, 2016-->
+            <?php echo form_close(); ?>
     </div>
 </div>
 </div>

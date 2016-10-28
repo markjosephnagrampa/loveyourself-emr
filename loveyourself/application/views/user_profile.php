@@ -99,7 +99,7 @@
                       		}
                       		else if(strpos($this->session->userdata('usrname'), 'ADM')){
                       			$data = array(
-			                        'name' => 'submitfrom_user_profile',
+			                        'name' => 'submitfrom_admin_profile',
 			                        'id'   => 'submit',
 			                        'value' => 'View Patient Info',
 			                        'type' => 'submit',
